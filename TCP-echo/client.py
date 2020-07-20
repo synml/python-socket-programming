@@ -15,7 +15,7 @@ print('[TCP 클라이언트] 서버 연결: {}:{}'.format(server_ip, server_port
 while True:
     # 송신할 데이터를 입력한다.
     buffer = input('Send: ')
-    if buffer == '/exit':
+    if not buffer:
         break
 
     # 데이터를 송신한다.
