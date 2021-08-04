@@ -3,32 +3,32 @@ import socket
 server_ip = '127.0.0.1'
 server_port = 50000
 
-# 통신용 소켓을 생성한다.
+# 클라이언트 소켓을 생성한다.
 client_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # 서버에 연결한다.
 client_sock.connect((server_ip, server_port))
 
 # 서버에 연결했음을 알린다.
-print('[TCP 클라이언트] 서버 연결: {}:{}'.format(server_ip, server_port))
+print(f'[TCP 클라이언트] 서버 연결: {server_ip}:{server_port}')
 
 while True:
-    # 송신할 데이터를 입력한다.
+    # 송신할 데이터를 입력한다. 그냥 엔터를 누르면 연결 끊기
     buffer = input('Send: ')
-    if not buffer:
+    if buffer == '':
+        print('서버와 연결 끊기')
         break
 
     # 데이터를 송신한다.
-    retval = client_sock.send(buffer.encode('utf-8'))
+    buffer = buffer.encode('utf-8')
+    retval = client_sock.send(buffer)
 
     # 데이터를 수신한다.
     buffer = client_sock.recv(1024)
+    buffer = buffer.decode('utf-8')
 
     # 수신한 데이터를 출력한다.
-    print('Recv: {}'.format(buffer.decode('utf-8'), end='\n\n'))
+    print(f'Recv: {buffer}')
 
-# 통신용 소켓을 닫는다.
+# 클라이언트 소켓을 닫는다.
 client_sock.close()
-
-print('프로그램을 종료합니다.')
-exit(0)
