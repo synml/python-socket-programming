@@ -8,6 +8,9 @@ server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # Local IP 주소와 Local Port 번호를 설정한다.
 server_sock.bind(('', server_port))
 
+# 주기적으로 연결 상태 확인
+server_sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
+
 # 서버 대기용 소켓을 LISTENING 상태로 변경한다.
 server_sock.listen()
 
